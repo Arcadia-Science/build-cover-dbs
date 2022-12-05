@@ -8,9 +8,8 @@ rule all:
 
 rule download_db_cover_script:
     output: "scripts/make-db-cover.py"
-    conda: "envs/wget.yml"
     shell:'''
-    wget -O {output} https://raw.githubusercontent.com/ctb/2022-database-covers/165c76675d93a8054b8d0140d9b70fe6cff7fd2f/make-db-cover.py
+    curl -JLo {output} https://raw.githubusercontent.com/ctb/2022-database-covers/165c76675d93a8054b8d0140d9b70fe6cff7fd2f/make-db-cover.py
     '''
 
 #################################################################

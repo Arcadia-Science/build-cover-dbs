@@ -1,7 +1,10 @@
-
 KSIZES = [21, 31, 51]
 LINEAGES=['bacteria', 'viral', 'archaea', 'fungi', 'protozoa']
 TOBUILD_LINEAGES=['invertebrate', 'plant', 'vertebrate_mammalian', 'vertebrate_other']
+
+rule all:
+    input:
+        expand("outputs/sourmash_database_covers/genbank-2022.03-k{ksize}-scaled100k-cover.zip", ksize = KSIZES)
 
 rule download_db_cover_script:
     output: "scripts/make-db-cover.py"
@@ -29,7 +32,7 @@ rule download_sourmash_databases_genbank:
 
 rule build_cover:
     input: 
-        script = "scripts/make-db-cover.py"
+        script = "scripts/make-db-cover.py",
         db = "inputs/sourmash_databases/genbank-2022.03-{lineage}-k{ksize}.zip"
     output: "outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{ksize}-scaled1k-cover.zip"
     conda: "envs/sourmash.yml"
@@ -48,7 +51,7 @@ rule downsample_cover:
 rule combine_covers_into_single_db:
     input: expand("outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{{ksize}}-scaled100k-cover.zip", lineage = LINEAGES)
     output: "outputs/sourmash_database_covers/genbank-2022.03-k{ksize}-scaled100k-cover.zip"
-    conda: "env/sourmash.yml"
+    conda: "envs/sourmash.yml"
     shell:'''
     sourmash sig cat {input} -o {output}
     '''
@@ -56,5 +59,3 @@ rule combine_covers_into_single_db:
 #################################################################
 ## Build databases for sets of genbank missing
 #################################################################
-
-

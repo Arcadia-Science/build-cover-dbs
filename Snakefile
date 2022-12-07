@@ -1,3 +1,5 @@
+import pandas as pd
+
 KSIZES = [21, 31, 51]
 LINEAGES=['bacteria', 'viral', 'archaea', 'fungi', 'protozoa']
 TOBUILD_LINEAGES=['invertebrate', 'plant', 'vertebrate_mammalian', 'vertebrate_other']

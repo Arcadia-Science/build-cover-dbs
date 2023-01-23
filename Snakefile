@@ -1,6 +1,5 @@
 KSIZES = [21, 31, 51]
 LINEAGES=['bacteria', 'viral', 'archaea', 'fungi', 'protozoa']
-TOBUILD_LINEAGES=['invertebrate', 'plant', 'vertebrate_mammalian', 'vertebrate_other']
 
 rule all:
     input:
@@ -54,7 +53,3 @@ rule combine_covers_into_single_db:
     shell:'''
     sourmash sig cat {input} -o {output}
     '''
-
-#################################################################
-## Build databases for sets of genbank missing
-#################################################################

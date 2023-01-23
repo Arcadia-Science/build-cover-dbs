@@ -1,6 +1,6 @@
 import pandas as pd
 
-KSIZES = [21, 31, 51]
+KSIZES=[21, 31, 51]
 LINEAGES=['bacteria', 'viral', 'archaea', 'fungi', 'protozoa']
 
 rule all:

@@ -1,1 +1,4 @@
 *swp
+inputs/sourmash_databases/*zip
+outputs/
+.snakemake/

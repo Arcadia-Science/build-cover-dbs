@@ -2,3 +2,4 @@
 inputs/sourmash_databases/*zip
 outputs/
 .snakemake/
+.DS_Store

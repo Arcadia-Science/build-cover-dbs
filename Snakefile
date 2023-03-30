@@ -10,7 +10,7 @@ rule all:
 rule download_db_cover_script:
     output: "scripts/make-db-cover.py"
     shell:'''
-    curl -JLo {output} https://raw.githubusercontent.com/ctb/2022-database-covers/165c76675d93a8054b8d0140d9b70fe6cff7fd2f/make-db-cover.py
+    curl -JLo {output} https://raw.githubusercontent.com/Arcadia-Science/2023-symbiosis-by-contam/ter/contam/scripts/make-db-cover.py 
     '''
 
 #################################################################
@@ -37,11 +37,19 @@ rule build_cover:
     output: "outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{ksize}-scaled1k-cover.zip"
     conda: "envs/sourmash.yml"
     shell:'''
-    ./{input.script} {input.db} -o {output}
+    ./{input.script} {input.db} -o {output} --scaled 1000
     '''
 
-rule downsample_cover:
+rule downsample_cover_10k:
     input: "outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{ksize}-scaled1k-cover.zip"
+    output: "outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{ksize}-scaled10k-cover.zip"
+    conda: "envs/sourmash.yml"
+    shell:'''
+    sourmash sig downsample --scaled 10000 -o {output} {input} 
+    '''
+
+rule downsample_cover_100k:
+    input: "outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{ksize}-scaled10k-cover.zip"
     output: "outputs/sourmash_database_covers/genbank-2022.03-{lineage}-k{ksize}-scaled100k-cover.zip"
     conda: "envs/sourmash.yml"
     shell:'''

@@ -16,14 +16,28 @@ There might be other shortcomings to this approach as well that we haven't thoug
 
 For the original issue outlining this approach, see [here](https://github.com/sourmash-bio/sourmash/issues/1852). 
 For ideas of how to use these databases, see [here](https://github.com/dib-lab/2022-sra-gather/issues/11) and [here](https://github.com/dib-lab/2022-sra-gather/issues/12).
+To download the databases, see [here](https://osf.io/6zk3d/).
 
 ## Getting started
 
 
 This repository uses snakemake to run the pipeline and conda to manage software environments and installations.
 You can find operating system-specific instructions for installing miniconda [here](https://docs.conda.io/en/latest/miniconda.html).
-After installing conda and [mamba](https://mamba.readthedocs.io/en/latest/), run the following command to create the pipeline run environment.
 
+```
+curl -JLO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh # download the miniconda installation script
+bash Miniconda3-latest-Linux-x86_64.sh
+source ~/.bashrc # source the .bashrc for miniconda to be available in the environment
+
+# configure miniconda channel order
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --set channel_priority strict # make channel priority strict so snakemake doesn't yell at you
+conda install mamba # install mamba for faster software installation.
+```
+
+After installing conda and [mamba](https://mamba.readthedocs.io/en/latest/) and cloning the repo, run the following command to create the pipeline run environment.
 ```
 mamba env create -n covers --file environment.yml
 conda activate covers
